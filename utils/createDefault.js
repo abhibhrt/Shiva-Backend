@@ -1,6 +1,25 @@
 const Brand = require('../models/brandModel.js');
+const Admin = require('../models/adminModel.js');
 
 const createDefault = async () => {
+
+    try {
+        const existingAdmin = await Admin.findOne();
+        if (!existingAdmin) {
+            const addAdmin = Admin({
+                name: "Shiva Enterprises",
+                username: "shivaenterprises",
+                password: "se2025"
+            });
+            await addAdmin.save();
+            console.log("✅ Default Admin Created");
+        } else {
+            console.log('✅ Admin Already Exists');
+        }
+    } catch (error) { 
+        console.error('Error creating default admin:', error);
+    }
+
     try {
         const existingBrand = await Brand.findOne();
         if (!existingBrand) {
@@ -23,7 +42,7 @@ const createDefault = async () => {
             });
             await defaultBrand.save();
             console.log('✅ Default brand created successfully');
-        } else{
+        } else {
             console.log('✅ Brand Already Exists');
         }
     } catch (error) {

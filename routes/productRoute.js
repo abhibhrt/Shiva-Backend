@@ -1,11 +1,13 @@
 const express  = require('express');
 const Product = require('../models/productModel.js');
+const authenticate = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // Create Product - POST /api/products
 router.post('/', async (req, res) => {
   try {
+    console.log('chekkkkk')
     const product = new Product(req.body);
     const saved = await product.save();
     res.status(201).json(saved);

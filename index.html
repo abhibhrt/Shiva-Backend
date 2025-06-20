@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JWT Login Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+    }
+    input, button {
+      display: block;
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 300px;
+    }
+    #response {
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Login (JWT)</h1>
+
+  <input type="email" id="email" placeholder="Enter email" />
+  <input type="password" id="password" placeholder="Enter password" />
+  <button onclick="login()">Login</button>
+
+  <button onclick="getProtected()">Get Protected Data</button>
+
+  <div id="response"></div>
+
+  <script>
+    let token = '';
+
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+
+      if (data.token) {
+        token = data.token;
+      }
+    }
+
+    async function getProtected() {
+      const res = await fetch('http://localhost:5000/api/auth/protected', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>

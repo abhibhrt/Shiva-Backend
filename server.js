@@ -6,6 +6,7 @@ const createDefault = require('./utils/createDefault.js');
 const brandRoute = require('./routes/brandRoute.js');
 const feedbackRoute = require('./routes/feedbackRoute.js');
 const productRoute = require('./routes/productRoute.js');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 const port = process.env.PORT || 3001; 
@@ -25,6 +26,8 @@ createDefault();
 app.use('/api/brand', brandRoute);
 app.use('/api/feedback', feedbackRoute);
 app.use('/api/products', productRoute);
+app.use('/api/auth', authRoutes);
+
 
 // ✅ Routes Controls
 app.get('/', (req, res) => {
