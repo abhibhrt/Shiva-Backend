@@ -7,7 +7,7 @@ const router = express.Router();
 // Create Product - POST /api/products
 router.post('/', async (req, res) => {
   try {
-    console.log('chekkkkk')
+    console.log('checking');
     const product = new Product(req.body);
     const saved = await product.save();
     res.status(201).json(saved);
